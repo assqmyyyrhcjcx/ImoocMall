@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script src="../node_modules/axios/dist/axios.js"></script>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>axios插件详解</h1>
+    <a href="javascript:;" class="btn btn-primary" v-on:click="sendGet">SimpleGET请求</a>
+    <a href="javascript:;" class="btn btn-primary" @click="sendPost">SimplePOST请求</a>
+    <a href="javascript:;" class="btn btn-primary" @click="sendHttpGET">sendHttpGET请求</a>
+    <a href="javascript:;" class="btn btn-primary" @click="sendHttpPOST">sendHttpPOST请求</a>
+    <div>
+      <span>{{msg}}</span>
+    </div>
+  </div>
+
+  <script>
+    new Vue({
+      el: "#app",
+      data() {
+        return {
+          msg:''
+        }
+      },
+      mounted: function () {
+        axios.interceptors.request.use(config => {
+          console.log("request init.");
+          return config;
+        });
+        axios.interceptors.response.use(config => {
+          console.log("request finish.");
+          return config;
+        });
+      },
+      methods: {
+        sendGet() {
+          axios.get("../package.json", {
+            params: {
+              userId:123
+            },
+            headers: {
+              token: "aaa"
+            }
+          }).then(res => {
+            this.msg = res.data;
+          }).catch(error => {
+            this.msg = res.data;
+          });
+        },
+        sendPost() {
+          axios.post("../package.json", {
+            userId: 123
+          }).then(res => {
+            this.msg = res.data;
+          }).catch(error => {
+            this.msg = error.data;
+          })
+        },
+        sendHttpGET() {
+          axios({
+            url: "../package.json",
+            method: "GET",
+            params : {
+              userId: 123
+            },
+          }).then(res => {
+            this.msg = res.data;
+          }).catch(error => {
+            this.msg = error.data;
+          })
+        },
+        sendHttpPOST() {
+          axios({
+            url: "../package.json",
+            method: "POST",
+            data: {
+              userId: 123
+            },
+          }).then(res => {
+            this.msg = res.data;
+          }).catch(error => {
+            this.msg = error.data;
+          })
+        }
+      }
+    });
+  </script>
+</body>
+</html>
