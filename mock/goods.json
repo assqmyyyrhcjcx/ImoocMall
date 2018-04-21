@@ -1,0 +1,24 @@
+{
+  "status": "0",
+  "msg": "",
+  "result": [
+    {
+      "prodctId": "10001",
+      "productName": "xiaomi",
+      "productPrice": 2499,
+      "productImg": "1.jpg"
+    },
+    {
+      "prodctId": "10001",
+      "productName": "xiaomi",
+      "productPrice": 2499,
+      "productImg": "1.jpg"
+    },
+    {
+      "prodctId": "10001",
+      "productName": "xiaomi",
+      "productPrice": 2499,
+      "productImg": "1.jpg"
+    }
+  ]
+}
