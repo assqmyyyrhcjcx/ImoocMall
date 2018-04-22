@@ -10,6 +10,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
+//mock数据初始化开始
+var goodsData = require('./../mock/goods.json');//加载本地数据文件
+//mock数据初始化结束
+
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
@@ -42,7 +46,16 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
+    },
+
+    // mock数据开始
+    // 然后找到devServer,在里面添加
+    before(app) {
+        app.get('/goods', (req, res) => {
+          res.json(goodsData);
+        })
     }
+    // mock 数据结束
   },
   plugins: [
     new webpack.DefinePlugin({
