@@ -1,0 +1,65 @@
+﻿1.创建一个存放MongoDB的文件夹，例如: E:\MongoDB
+
+2.在此文件夹中创建三个文件夹，分别为：data、etc、logs
+
+3.在etc文件夹中创建一个文件,名为mongo.conf，并且将下面内容复制进去
+  
+#数据库数据存放目录
+dbpath=E:\MongoDB\data\
+#数据库日志存放目录
+logpath=E:\MongoDB\logs\mongodb.log
+#以追加的方式记录日志
+logappend=true
+#端口号 默认为27017
+port=27017 
+#开启用户认证，开启后需要用用户密码去登录使用
+auth=true
+#关闭http接口，默认关闭http端口访问
+#nohttpinterface=true
+#mongodb所绑定的ip地址
+bind_ip = 127.0.0.1 
+#启用日志文件，默认启用
+journal=true 
+#这个选项可以过滤掉一些无用的日志信息，若需要调试使用请设置为false
+quiet=true 
+
+
+mongod --dbpath c:\data\db --logpath c:\data\logs --auth
+说明：此命令为启动mongodb服务，dbpath后的为保存数据的地址，logpath为日志，可不填，auth可不加，加了之后需要用户登录来操作数据库
+
+可使用config去启动服务，如下：
+mongod --config E:\MongoDB\etc\mongo.conf
+
+若需要将mongodb注册为windows服务的话，可使用一下命令：
+mongod --config E:\MongoDB\etc\mongo.conf --install --serviceName "MongoDB"
+执行完成后可以在windows服务中查看到该服务，若不想自定义服务名字，install后面的命令可以不写
+
+注册完了windows服务后，可以直接启动windows服务来启动mongodb服务，命令如下：
+net start MongoDB
+
+若需要关闭windows服务可以使用如下命令：
+net stop MongoDB
+
+若需要删除此windows服务可以使用如下命令：
+sc delete MongoDB
+
+启动服务后，另开一个窗口，执行 “mongo” 来操作mongodb
+
+注意：如果使用--auth启动服务的话，操作mongodb需要使用用户来登录
+mongo --port 27017 -u "adminUser" -p "adminPass" --authenticationDatabase "admin"
+可不加端口，默认端口就是27017
+
+另外一种方法，使用use.dbbasename进入数据库中
+然后使用db.auth("username", "password"),即可操作数据库 
+
+use.admin
+db.createUser({user: "admin", pwd: "admin", roles: [“root”]})
+此命令是用来创建用户的
+
+使用命令导入文件数据到相应的collection中，可以使用如下命令：
+C:\Users\Administrator>mongoimport -d dumall -c goods --file E:\web_workspace\项
+目代码\dumall-goods -u "root" -p "666666"
+2018-04-23T18:11:41.281+0800    connected to: localhost
+2018-04-23T18:11:41.297+0800    imported 17 documents
+
+说明：dumall为数据库名，goods为集合名，file后为文件路径，最后面的是用户名和密码，为使用auth启动服务可不添加

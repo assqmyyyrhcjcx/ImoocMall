@@ -1,0 +1,79 @@
+Goods{
+	productId,
+	productName,
+	salePrice,
+	productNum,
+	productSaleNum,
+	productImg,
+	productInfo,
+	productDetail,
+	createTime, // 商品上线时间
+	status, // 1销售中，2已下架，3热卖
+	sex, // 款式是男性还是女性
+	brandName, // 商品的品牌
+	materialName, // 商品的材质
+}
+
+Order{
+	orderId,
+	orderTotalPrice,
+	userId, // 哪个用户的订单
+	addresseeId // 订单收货地址
+	createTime,
+	status // 订单是否删除，0未删除，1已删除
+}
+
+OrderItem{
+	orderItemId,
+	orderId, // 属于哪个订单
+	productName,
+	saleNum,
+	salePrice,
+	totalPeice
+}
+
+Addressee{
+	addresseeId,
+	name,
+	telephone,
+	address
+}
+
+Comment{
+	commentId,
+	productId, // 哪个订单的评价
+	content, // 评价内容
+	userId, // 哪个用户评价
+	createTime
+}
+
+brand{
+	brandId,
+	brandName,
+	brandInfo,
+	brandImg,
+	productNum, // 多少款商品
+}
+
+category{
+	categoryId, // 商品的分类
+	categoryName, // 例如：项链、手链、手串、戒指、耳饰、手镯、吊坠
+}
+
+material{
+	materialId,
+	materialName, // 材质的名称 例如：钻石、玉石、黄金、铂金、足银、珍珠、木质、水晶
+}
+
+priceScope{
+	priceScopeId,
+	startPrice,
+	endPrice
+}
+
+shoppingItem{
+	shoppingCartId,
+	productId, // 关联到商品
+	addedNum, // 已添加的数量
+	userId, // 关联到具体用户
+}
