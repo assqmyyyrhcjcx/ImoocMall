@@ -30,7 +30,7 @@
               <ul>
                 <li v-for="(item, index) in goodsList">
                   <div class="pic">
-                    <a href="#"><img v-lazy="'/static/'+item.productImg" alt=""></a>
+                    <a href="#"><img v-lazy="'/static/'+item.productImage" alt=""></a>
                   </div>
                   <div class="main">
                     <div class="name">{{item.productName}}</div>
@@ -97,7 +97,7 @@
           url: "/goods",
           method: "GET",
         }).then(res => {
-          this.goodsList = res.data.result;
+          this.goodsList = res.data.result.list;
         });
       },
       setPriceFilter(index) {

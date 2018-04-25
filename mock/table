@@ -26,10 +26,10 @@ Order{
 OrderItem{
 	orderItemId,
 	orderId, // 属于哪个订单
-	productName,
+	productId,
 	saleNum,
-	salePrice,
-	totalPeice
+	totalPeice,
+	isComment // 是否已评价
 }
 
 Addressee{
@@ -41,9 +41,9 @@ Addressee{
 
 Comment{
 	commentId,
-	productId, // 哪个订单的评价
 	content, // 评价内容
 	userId, // 哪个用户评价
+	orderItemId, // 哪个订单项的评价
 	createTime
 }
 
