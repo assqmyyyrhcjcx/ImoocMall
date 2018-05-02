@@ -80,7 +80,8 @@
         ],
         priceChecked: "all",
         filterBy: false,
-        overLayFlag: false
+        overLayFlag: false,
+        sortFlag: true
       }
     },
     components: {
@@ -93,9 +94,11 @@
     },
     methods: {
       getGoodsList() {
+        let params = {'page': this.page, 'pageSize': this.pageSize, 'sort': this.sortFlag == true ? 1 : -1};
         axios({
           url: "/goods",
           method: "GET",
+          params: params
         }).then(res => {
           this.goodsList = res.data.result.list;
         });
@@ -111,6 +114,11 @@
       closePop() {
         this.filterBy = false;
         this.overLayFlag = false;
+      },
+      sortGoods() {
+        this.sortFlag = !this.sortFlag;
+        this.page = 1;
+        this.sortGoods();
       }
     }
   }
