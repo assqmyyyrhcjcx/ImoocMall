@@ -99,14 +99,28 @@
       this.getGoodsList();
     },
     methods: {
-      getGoodsList() {
+      getGoodsList(flag) {
         let params = {'page': this.page, 'pageSize': this.pageSize, 'sort': this.sortFlag == true ? 1 : -1};
         axios({
           url: "/goods",
           method: "GET",
           params: params
         }).then(res => {
-          this.goodsList = res.data.result.list;
+          if (res.data.status == "0") {
+            if (flag) {
+              this.goodsList = this.goodsList.concat(res.data.result.list);
+              if (res.data.result.count == 0) {
+                this.busy = true;
+              }else {
+                this.busy = false;
+              }
+            }else {
+              this.goodsList = res.data.result.list;
+              this.busy = false;
+            }
+          }else {
+            this.goodsList = [];
+          }
         });
       },
       setPriceFilter(index) {
@@ -127,9 +141,11 @@
         this.getGoodsList();
       },
       loadMore() {
+        this.busy = true;
         setTimeout(() => {
-          this.busy = true;
+          this.page++;
           this.busy = false;
+          this.getGoodsList(true);
         }, 3000);
       }
     }
